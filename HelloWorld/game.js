@@ -4,9 +4,8 @@ var bobby;
 
 var bobX=600;
 var bobY=600;
-var flip;
-var loop;
-var angle;
+var flip=0;
+var angle=0;
 var h=25;
 var w=25;
 
@@ -14,35 +13,42 @@ function draw()
 {	
 	draw_sprite(canvas,scene1,0,0);
 	
+	if(flip<10){
+		draw_sprite_h_flip(canvas,bobby, 600, 600);
+		draw_sprite_v_flip(canvas,bobby, 700,600);
+	}
+	if(flip>9){
+		draw_sprite(canvas,bobby, 600, 600);
+		draw_sprite(canvas,bobby, 700, 600);
+	}
+	
+	
+	rotate_sprite(canvas, bobby, 400, 600, angle);
+	
+	stretch_sprite(canvas, bobby, 500, 600, w, h);
+	
+	stretch_sprite(canvas, bobby, 300, 600, w, 50);
+	
+	stretch_sprite(canvas, bobby, 200, 600, 50, h);
 	
 }
 
 function update()
-{
-	 draw_sprite( buffer, scene1, 0, 0);
-     if(flip==0){draw_sprite(buffer,bobby, 600, 600); flip=1; loop=1;}
-	if(flip==1 && loop==0){draw_sprite_h_flip(buffer,bobby, 600, 600); flip=0;}
-	loop=0;
-	
+	{
 	angle=angle+5;                      
-	rotate_sprite(buffer, bobby, 400, 600, itofix(angle));
 	
-	stretch_sprite(buffer, bobby, 500, 600, w, h);
-	
-	stretch_sprite(buffer, bobby, 300, 600, w, 50);
-	
-	stretch_sprite(buffer, bobby, 200, 600, 50, h);
-	
+	flip++;
 	w++;
 	h++;
 	
+	if(flip==20){flip=0;}
 	if(w==75){w=25;}
 	if(h==75){h=25;}	
 }
 
 function setup(){
 	scene1 = load_bmp("scene1.bmp");
-	buffer = load_bmp("bobby.bmp");
+	bobby = load_bmp("bobby.png");
 }
 
 function main()
